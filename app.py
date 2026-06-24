@@ -59,30 +59,35 @@ def generate_next_serials(prefix, count):
 st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
+
     <style>
-    /* Hides the top right GitHub icon and main hamburger menu button */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
-    
-    /* Hides the running status element and deployment footer watermark */
-    footer {visibility: hidden;}
-    div[data-testid="stStatusWidget"] {visibility: hidden;}
-    .viewerBadge_container__1QS1A {display: none !important;}
-    
-    /* Your existing CSS styling rules */
+
     .kpi-card {
+
         background-color: #f8f9fa;
+
         border-radius: 10px;
+
         padding: 20px;
+
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+
         border-left: 5px solid #007bff;
+
         margin-bottom: 15px;
+
     }
+
     .kpi-card.battery { border-left-color: #28a745; }
+
     .kpi-card.alert { border-left-color: #ffc107; }
+
     .kpi-title { font-size: 13px; color: #6c757d; font-weight: bold; text-transform: uppercase; }
+
     .kpi-value { font-size: 26px; font-weight: bold; color: #212529; margin-top: 5px; }
+
     </style>
+
 """, unsafe_allow_html=True)
 
 
