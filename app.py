@@ -60,6 +60,16 @@ st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
+    /* Hides the top right GitHub icon and main hamburger menu button */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
+    
+    /* Hides the running status element and deployment footer watermark */
+    footer {visibility: hidden;}
+    div[data-testid="stStatusWidget"] {visibility: hidden;}
+    .viewerBadge_container__1QS1A {display: none !important;}
+    
+    /* Your existing CSS styling rules */
     .kpi-card {
         background-color: #f8f9fa;
         border-radius: 10px;
