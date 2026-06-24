@@ -59,35 +59,31 @@ def generate_next_serials(prefix, count):
 st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
-
     <style>
-
+    /* 1. Show the header bar so the three dots menu and profile are active */
+    header {visibility: visible !important;}
+    
+    /* 2. Target and hide ONLY the specific GitHub icon button next to the three dots */
+    header a[href*="github.com"] {display: none !important;}
+    
+    /* 3. Hide only the Streamlit watermark badge container at the bottom right */
+    .viewerBadge_container__1QS1A {display: none !important;}
+    footer {display: none !important;}
+    
+    /* Your existing CSS styling rules remain completely intact */
     .kpi-card {
-
         background-color: #f8f9fa;
-
         border-radius: 10px;
-
         padding: 20px;
-
         box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-
         border-left: 5px solid #007bff;
-
         margin-bottom: 15px;
-
     }
-
     .kpi-card.battery { border-left-color: #28a745; }
-
     .kpi-card.alert { border-left-color: #ffc107; }
-
     .kpi-title { font-size: 13px; color: #6c757d; font-weight: bold; text-transform: uppercase; }
-
     .kpi-value { font-size: 26px; font-weight: bold; color: #212529; margin-top: 5px; }
-
     </style>
-
 """, unsafe_allow_html=True)
 
 
