@@ -62,10 +62,10 @@ st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1. Keep the top header bar fully visible so your profile and 3-dots work */
+    /* 1. Ensure the top header background bar stays active for your profile/three-dots */
     header { visibility: visible !important; }
     
-    /* 2. Hide ONLY the Fork and GitHub action buttons on the header */
+    /* 2. Hide ONLY the Fork button and the GitHub source link icon next to your profile */
     div[data-testid="stAppDeployToCloudActions"] {
         display: none !important;
     }
@@ -73,13 +73,13 @@ st.markdown("""
         display: none !important;
     }
     
-    /* 3. Completely hide the bottom-right Streamlit floating logo badge */
-    footer { visibility: hidden !important; display: none !important; }
+    /* 3. Hide ONLY the bottom-right Streamlit floating red cloud logo badge */
     [data-testid="stViewerBadge"] { display: none !important; }
     div[class*="viewerBadge"] { display: none !important; }
     .viewerBadge_container__1QS1A { display: none !important; }
+    footer { visibility: hidden !important; display: none !important; }
     
-    /* Your existing KPI card styling rules remain completely untouched */
+    /* Your existing CSS styling rules remain completely untouched */
     .kpi-card {
         background-color: #f8f9fa;
         border-radius: 10px;
@@ -94,7 +94,6 @@ st.markdown("""
     .kpi-value { font-size: 26px; font-weight: bold; color: #212529; margin-top: 5px; }
     </style>
 """, unsafe_allow_html=True)
-
 
 col_logo, col_title = st.columns([1, 5])
 with col_logo:
