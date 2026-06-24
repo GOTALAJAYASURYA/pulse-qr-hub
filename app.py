@@ -54,24 +54,21 @@ def generate_next_serials(prefix, count):
     return new_serials
 
 # ==========================================
+# ==========================================
 # 2. APP LAYOUT AND CONFIGURATION
 # ==========================================
 st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1. Ensure the main header background bar stays active for your profile/three-dots */
+    /* 1. Ensure the main header background bar stays fully active */
     header { visibility: visible !important; }
     
-    /* 2. Universal target: Hide ANY link pointing to GitHub or containing Fork/Deploy actions */
-    header a, button[title*="Repo"], div[class*="Deploy"], div[class*="ActionButton"] {
-        display: none !important;
-    }
-    
-    /* 3. Universal target: Hide the bottom right Streamlit watermark badge container */
-    footer, [class*="viewerBadge"], [class*="embedBadge"] {
-        display: none !important;
-    }
+    /* 2. Target and hide the bottom-right Streamlit logo watermark container */
+    footer { visibility: hidden !important; }
+    [data-testid="stViewerBadge"] { display: none !important; }
+    div[class*="viewerBadge"] { display: none !important; }
+    div[class*="embedBadge"] { display: none !important; }
     
     /* Your existing CSS styling rules remain completely untouched */
     .kpi-card {
