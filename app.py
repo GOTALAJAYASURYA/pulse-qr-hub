@@ -121,14 +121,14 @@ with tab_overview:
         
     st.markdown("### 📋 Wheelchair Master Ledger")
     df_wc = pd.read_sql_query("SELECT serial_number as 'Serial Number', model_type as 'Model Specification', status as 'Production Status', installed_battery_serial as 'Linked Battery SN', customer_name as 'Assigned Customer', dispatch_date as 'Shipment Date' FROM wheelchairs", conn)
-    st.dataframe(df_wc, width='stretch', hide_index=True)
+    st.dataframe(df_wc, use_container_width=True, hide_index=True)
     
     st.markdown("### 📋 Battery Master Ledger")
     df_bat = pd.read_sql_query("SELECT serial_number as 'Serial Number', capacity_batch as 'Batch Details', status as 'Status Profile', assigned_wheelchair_serial as 'Parent Device SN' FROM batteries", conn)
-    st.dataframe(df_bat, width='stretch', hide_index=True)
+    st.dataframe(df_bat, use_container_width=True, hide_index=True)
 
 # ==========================================
-# TAB 2: BATCH QR SERIAL GENERATOR (UPDATED TO SAVE FILES)
+# TAB 2: BATCH QR SERIAL GENERATOR
 # ==========================================
 with tab_generator:
     st.subheader("Generate Unique Identity Matrix Profiles")
@@ -153,13 +153,12 @@ with tab_generator:
                 else:
                     cursor.execute("INSERT INTO batteries (serial_number, capacity_batch, status) VALUES (?, ?, 'In Stock (Available)')", (sn, spec_info))
                 
-                # 2. Automatically Generate QR and Save as .png file on Laptop Hard Drive
+                # 2. Automatically Generate QR and Save as .png file
                 qr = qrcode.QRCode(version=1, box_size=10, border=4)
                 qr.add_data(sn)
                 qr.make(fit=True)
                 img = qr.make_image(fill_color="black", back_color="white")
                 
-                # Construct file path: generated_qrs/WC-2026-000001.png
                 file_path = os.path.join(QR_FOLDER, f"{sn}.png")
                 img.save(file_path)
                 
@@ -239,30 +238,31 @@ with tab_assembly:
         run_cam = st.checkbox("Turn On Laptop Camera Sensor Feed", key="cam_assemble_active")
         
         if run_cam:
-            cap = cv2.VideoCapture(0)
-            detector = cv2.QRCodeDetector()
-            st_frame = st.empty()
+            # Native browser-side camera integration instead of remote OpenCV capture loop
+            img_file = st.camera_input("Hold QR Code up to Camera Frame to Scan")
             
-            while run_cam:
-                ret, frame = cap.read()
-                if not ret: break
+            if img_file is not None:
+                # Convert file payload data to openable OpenCV image format
+                file_bytes = BytesIO(img_file.getvalue()).read()
+                opencv_img = cv2.imdecode(pd.np.frombuffer(file_bytes, pd.np.uint8), cv2.IMREAD_COLOR)
                 
-                data, bbox, _ = detector.detectAndDecode(frame)
+                # Decode the content matrix framework
+                detector = cv2.QRCodeDetector()
+                data, bbox, _ = detector.detectAndDecode(opencv_img)
+                
                 if data:
                     if data.startswith("WC-") and data in available_wcs:
                         st.session_state.persistent_wc = data
                         st.toast(f"Frame Decoded: {data}", icon="♿")
-                        cap.release()
                         st.rerun()
                     elif data.startswith("BAT-") and data in available_bats:
                         st.session_state.persistent_bat = data
                         st.toast(f"Battery Decoded: {data}", icon="🔋")
-                        cap.release()
                         st.rerun()
-                
-                img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                st_frame.image(img_rgb, channels="RGB", width=380)
-            cap.release()
+                    else:
+                        st.error(f"Scanned text '{data}' is not currently available or recognized.")
+                else:
+                    st.warning("No clear QR structure detected. Try centering your label or increasing ambient light.")
 
 # ==========================================
 # TAB 4: LOGISTICS HUB (CUSTOMER DISPATCH)
@@ -304,21 +304,20 @@ with tab_dispatch:
         run_cam_disp = st.checkbox("Turn On Shipping Camera Sensor Feed", key="cam_ship_active")
         
         if run_cam_disp:
-            cap_d = cv2.VideoCapture(0)
-            detector_d = cv2.QRCodeDetector()
-            st_frame_d = st.empty()
+            # Native browser-side camera integration for fulfillment dispatch
+            img_file_disp = st.camera_input("Scan your Device Outbound Container QR Code")
             
-            while run_cam_disp:
-                ret, frame = cap_d.read()
-                if not ret: break
+            if img_file_disp is not None:
+                # Convert file payload to readable format
+                file_bytes_disp = BytesIO(img_file_disp.getvalue()).read()
+                opencv_img_disp = cv2.imdecode(pd.np.frombuffer(file_bytes_disp, pd.np.uint8), cv2.IMREAD_COLOR)
                 
-                data, bbox, _ = detector_d.detectAndDecode(frame)
+                detector_d = cv2.QRCodeDetector()
+                data, bbox, _ = detector_d.detectAndDecode(opencv_img_disp)
+                
                 if data and data.startswith("WC-") and data in available_assembled_wcs:
                     st.session_state.dispatch_wc = data
                     st.toast(f"Shipping scan loaded: {data}")
-                    cap_d.release()
                     st.rerun()
-                    
-                img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                st_frame_d.image(img_rgb, channels="RGB", width=380)
-            cap_d.release()
+                elif data:
+                    st.error(f"Unit '{data}' must be marked as 'Assembled' to run shipment processing routines.")
