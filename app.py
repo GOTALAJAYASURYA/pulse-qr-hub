@@ -63,23 +63,16 @@ st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1. Make sure the main header remains completely visible */
-    header { visibility: visible !important; }
+    /* Hides the top right GitHub icon and main hamburger menu button */
+    #MainMenu {visibility: hidden;}
+    header {visibility: hidden;}
     
-    /* 2. Target the button toolbar and hide ONLY the first two buttons (Fork & GitHub) */
-    /* This completely leaves your profile avatar (the 3rd item) and the 3-dots menu alone! */
-    header div[data-testid="stActionButton"]:nth-of-type(1),
-    header div[data-testid="stActionButton"]:nth-of-type(2) {
-        display: none !important;
-    }
+    /* Hides the running status element and deployment footer watermark */
+    footer {visibility: hidden;}
+    div[data-testid="stStatusWidget"] {visibility: hidden;}
+    .viewerBadge_container__1QS1A {display: none !important;}
     
-    /* 3. Completely hide the bottom-right Streamlit floating red cloud logo badge */
-    footer { visibility: hidden !important; display: none !important; }
-    [data-testid="stViewerBadge"] { display: none !important; }
-    div[class*="viewerBadge"] { display: none !important; }
-    .viewerBadge_container__1QS1A { display: none !important; }
-    
-    /* Your existing KPI card styling rules remain completely untouched */
+    /* Your existing CSS styling rules */
     .kpi-card {
         background-color: #f8f9fa;
         border-radius: 10px;
