@@ -60,20 +60,20 @@ st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1. Ensure the top header remains fully active for menus and profiles */
-    header {visibility: visible !important;}
+    /* 1. Ensure the main header background bar stays active for your profile/three-dots */
+    header { visibility: visible !important; }
     
-    /* 2. Hide the Fork and GitHub action buttons inside the header toolbar wrapper */
-    div[data-testid="stAppDeployToCloudActions"] {
+    /* 2. Universal target: Hide ANY link pointing to GitHub or containing Fork/Deploy actions */
+    header a, button[title*="Repo"], div[class*="Deploy"], div[class*="ActionButton"] {
         display: none !important;
     }
     
-    /* 3. Hide the Streamlit logo badge from the bottom right corner */
-    .viewerBadge_container__1QS1A, footer, [data-testid="stActionButton"] {
+    /* 3. Universal target: Hide the bottom right Streamlit watermark badge container */
+    footer, [class*="viewerBadge"], [class*="embedBadge"] {
         display: none !important;
     }
     
-    /* Your existing metric card styles stay exactly the same */
+    /* Your existing CSS styling rules remain completely untouched */
     .kpi-card {
         background-color: #f8f9fa;
         border-radius: 10px;
