@@ -56,30 +56,30 @@ def generate_next_serials(prefix, count):
 # ==========================================
 # ==========================================
 # ==========================================
+# ==========================================
 # 2. APP LAYOUT AND CONFIGURATION
 # ==========================================
 st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
-    /* 1. Ensure the top header background bar stays active for your profile/three-dots */
+    /* 1. Make sure the main header remains completely visible */
     header { visibility: visible !important; }
     
-    /* 2. Hide ONLY the Fork button and the GitHub source link icon next to your profile */
-    div[data-testid="stAppDeployToCloudActions"] {
-        display: none !important;
-    }
-    header a[href*="github.com"] {
+    /* 2. Target the button toolbar and hide ONLY the first two buttons (Fork & GitHub) */
+    /* This completely leaves your profile avatar (the 3rd item) and the 3-dots menu alone! */
+    header div[data-testid="stActionButton"]:nth-of-type(1),
+    header div[data-testid="stActionButton"]:nth-of-type(2) {
         display: none !important;
     }
     
-    /* 3. Hide ONLY the bottom-right Streamlit floating red cloud logo badge */
+    /* 3. Completely hide the bottom-right Streamlit floating red cloud logo badge */
+    footer { visibility: hidden !important; display: none !important; }
     [data-testid="stViewerBadge"] { display: none !important; }
     div[class*="viewerBadge"] { display: none !important; }
     .viewerBadge_container__1QS1A { display: none !important; }
-    footer { visibility: hidden !important; display: none !important; }
     
-    /* Your existing CSS styling rules remain completely untouched */
+    /* Your existing KPI card styling rules remain completely untouched */
     .kpi-card {
         background-color: #f8f9fa;
         border-radius: 10px;
