@@ -59,20 +59,34 @@ def generate_next_serials(prefix, count):
 # ==========================================
 # 2. APP LAYOUT AND CONFIGURATION
 # ==========================================
+# ==========================================
+# 2. APP LAYOUT AND CONFIGURATION
+# ==========================================
 st.set_page_config(page_title="Medical Device Serialization Hub", layout="wide")
 
 st.markdown("""
     <style>
-    /* Hides the top right GitHub icon and main hamburger menu button */
-    #MainMenu {visibility: hidden;}
-    header {visibility: hidden;}
+    /* 1. Completely hide the entire top header bar (Removes account logo, 3-dots, Fork, and GitHub) */
+    header {
+        visibility: hidden !important;
+        display: none !important;
+        height: 0px !important;
+    }
     
-    /* Hides the running status element and deployment footer watermark */
-    footer {visibility: hidden;}
-    div[data-testid="stStatusWidget"] {visibility: hidden;}
-    .viewerBadge_container__1QS1A {display: none !important;}
+    /* 2. Completely hide the bottom footer and all floating Streamlit logo badges */
+    footer {
+        visibility: hidden !important;
+        display: none !important;
+    }
+    [data-testid="stViewerBadge"], 
+    div[class*="viewerBadge"], 
+    .viewerBadge_container__1QS1A,
+    div[data-testid="stDecoration"] {
+        display: none !important;
+        visibility: hidden !important;
+    }
     
-    /* Your existing CSS styling rules */
+    /* Your existing KPI card styling rules remain completely untouched */
     .kpi-card {
         background-color: #f8f9fa;
         border-radius: 10px;
