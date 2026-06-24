@@ -271,7 +271,7 @@ with tab_assembly:
             if img_file is not None:
                 # Convert file payload data to openable OpenCV image format
                 file_bytes = BytesIO(img_file.getvalue()).read()
-                opencv_img = cv2.imdecode(np.frombuffer(file_bytes, pd.np.uint8), cv2.IMREAD_COLOR)
+                opencv_img = cv2.imdecode(np.frombuffer(file_bytes, np.uint8), cv2.IMREAD_COLOR)
                 
                 # Decode the content matrix framework
                 detector = cv2.QRCodeDetector()
